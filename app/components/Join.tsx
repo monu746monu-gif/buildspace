@@ -7,27 +7,30 @@ interface JoinProps {
   open: boolean
   onClose: () => void
 }
-const [showProjects, setShowProjects] = useState(false)
+
 export default function Join({
   open,
   onClose,
 }: JoinProps) {
+  const [showProjects, setShowProjects] = useState(false)
+
   return (
-    <AnimatePresence>
-      {open && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 backdrop-blur-md px-4"
-        >
+    <>
+      <AnimatePresence>
+        {open && !showProjects && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.92, y: 40 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.92 }}
-            transition={{ duration: 0.35 }}
-            className="relative w-full max-w-2xl rounded-[32px] bg-white p-10 shadow-2xl"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 backdrop-blur-md px-4"
           >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.92, y: 40 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.92 }}
+              transition={{ duration: 0.35 }}
+              className="relative w-full max-w-2xl rounded-[32px] bg-white p-10 shadow-2xl"
+            >
 
             {/* Close */}
             <button
@@ -140,19 +143,21 @@ export default function Join({
               </div>
 
               <p className="mt-3 text-sm text-gray-400">
-                Type your city or enter "Remote"
+                Type your city or enter &quot;Remote&quot;
               </p>
             </div>
-            <button
-  onClick={() => setShowProjects(true)}
-  className="mt-12 w-full rounded-2xl bg-teal-500 hover:bg-teal-600 text-white py-5 text-lg font-medium shadow-lg shadow-teal-500/20 transition-all duration-300"
->
-  Continue
-</button>
+              <button
+                onClick={() => setShowProjects(true)}
+                className="mt-12 w-full rounded-2xl bg-teal-500 hover:bg-teal-600 text-white py-5 text-lg font-medium shadow-lg shadow-teal-500/20 transition-all duration-300"
+              >
+                Continue
+              </button>
            
+            </motion.div>
           </motion.div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+        )}
+      </AnimatePresence>
+      <Projects open={open && showProjects} />
+    </>
   )
 }

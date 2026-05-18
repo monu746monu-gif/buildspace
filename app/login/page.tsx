@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import Hero from "../components/Hero"
+import Hero from "@/app/components/Hero"
 import { supabase } from "@/lib/supabase"
 
 export default function LoginPage() {
