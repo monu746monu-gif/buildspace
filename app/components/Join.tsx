@@ -1,6 +1,8 @@
 "use client"
-import { useState } from "react"
+
 import Projects from "./Projects"
+import { useEffect, useState } from "react"
+import { supabase } from "../lib/supabase"
 import { motion, AnimatePresence } from "framer-motion"
 
 interface JoinProps {
@@ -8,11 +10,41 @@ interface JoinProps {
   onClose: () => void
 }
 
+interface Project {
+  id: string
+  title: string
+  description: string | null
+  partner_skills: string[] | null
+  preferred_team_size: string | number | null
+}
+
 export default function Join({
   open,
   onClose,
 }: JoinProps) {
   const [showProjects, setShowProjects] = useState(false)
+  const [projects, setProjects] = useState<Project[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      const { data, error } = await supabase
+        .from("projects")
+        .select("id, title, description, partner_skills, preferred_team_size")
+        .order("created_at", { ascending: false })
+
+      if (error) {
+        console.log(error)
+        setLoading(false)
+        return
+      }
+
+      setProjects((data || []) as Project[])
+      setLoading(false)
+    }
+
+    fetchProjects()
+  }, [])
 
   return (
     <>
@@ -158,6 +190,70 @@ export default function Join({
         )}
       </AnimatePresence>
       <Projects open={open && showProjects} />
+      {loading ? (
+
+<div className="text-center mt-20 text-gray-500">
+  Loading projects...
+</div>
+
+) : (
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
+
+  {projects.map((project) => (
+
+    <div
+      key={project.id}
+      className="rounded-3xl bg-white border border-gray-200 p-8 shadow-md hover:shadow-xl transition"
+    >
+
+      <div className="flex items-center justify-between">
+
+        <h2 className="text-2xl font-bold text-black">
+          {project.title}
+        </h2>
+
+        <div className="px-3 py-1 rounded-full bg-teal-100 text-teal-700 text-sm">
+          Open
+        </div>
+      </div>
+
+      <p className="mt-5 text-gray-600 leading-relaxed">
+        {project.description}
+      </p>
+
+      <div className="flex flex-wrap gap-3 mt-6">
+
+      {Array.isArray(project.partner_skills) &&
+  project.partner_skills.map((skill: string) => (
+
+          <div
+            key={skill}
+            className="px-4 py-2 rounded-full bg-gray-100 text-gray-700 text-sm"
+          >
+            {skill}
+          </div>
+
+        ))}
+
+      </div>
+
+      <div className="mt-8 flex items-center justify-between">
+
+        <p className="text-sm text-gray-500">
+          Team Size: {project.preferred_team_size}
+        </p>
+
+        <button className="px-5 py-3 rounded-2xl bg-teal-500 hover:bg-teal-600 text-white transition">
+          Join Project
+        </button>
+      </div>
+
+    </div>
+  ))}
+
+</div>
+)}
     </>
   )
 }

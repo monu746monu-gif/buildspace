@@ -144,11 +144,6 @@ const LockIcon = () => (
 export default function Footer() {
   return (
     <>
-      <link
-        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet"
-      />
-
       <footer style={styles.footer}>
         <div style={styles.dotGrid} />
 

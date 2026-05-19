@@ -5,7 +5,7 @@ import { useEffect, useState } from "react"
 import Join from "./Join"
 import FindBuddy from "./FindBuddy"
 import MakeProject from "./MakeProject"
-import { supabase } from "@/lib/supabase"
+import { supabase } from "../lib/supabase"
 import type { User } from "@supabase/supabase-js"
 
 

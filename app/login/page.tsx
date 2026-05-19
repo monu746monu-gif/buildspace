@@ -1,8 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import Hero from "@/app/components/Hero"
-import { supabase } from "@/lib/supabase"
+import { supabase } from "../lib/supabase"
 
 export default function LoginPage() {
   const [email, setEmail] = useState("")
@@ -51,7 +50,6 @@ export default function LoginPage() {
         {message && (
           <p className="text-sm mt-3 text-gray-600">{message}</p>
         )}
-        <Hero/>
       </div>
     </div>
   )
