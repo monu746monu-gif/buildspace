@@ -5,9 +5,14 @@ import { useEffect, useState } from "react"
 import Join from "./Join"
 import FindBuddy from "./FindBuddy"
 import MakeProject from "./MakeProject"
+import { ArrowRight } from "lucide-react"
+import { Code2, Users, Rocket, Trophy, Sparkles } from "lucide-react"
 import { supabase } from "../lib/supabase"
-import type { User } from "@supabase/supabase-js"
+import gsap from "gsap"
 
+import { Handshake } from "lucide-react"
+import { useRef , useCallback} from "react"
+import type { User } from "@supabase/supabase-js"
 
 export default function Hero() {
 
@@ -15,6 +20,8 @@ export default function Hero() {
   const [quizOpen, setQuizOpen] = useState(false)
   const [hackathonOpen, setHackathonOpen] = useState(false)
   const [step, setStep] = useState(1)
+  const buttonRef = useRef<HTMLDivElement | null>(null)
+  const zoneRef = useRef<HTMLDivElement | null>(null)
   const [email, setEmail] = useState("")
   const [user, setUser] = useState<User | null>(null)
   const [signInLoading, setSignInLoading] = useState(false)
@@ -22,7 +29,7 @@ export default function Hero() {
   const [findBuddyOpen, setFindBuddyOpen] = useState(false)
   const [joinOpen, setJoinOpen] = useState(false)
   const [createProjectOpen, setCreateProjectOpen] = useState(false)
-
+  
   const [selectedSkills, setSelectedSkills] = useState<string[]>([])
   const [selectedStatus, setSelectedStatus] = useState("")
   const [availability, setAvailability] = useState("")
@@ -41,7 +48,7 @@ export default function Hero() {
     "Video Editing",
     "Marketing",
   ]
-
+  
   const statuses = [
     "1st Year Student",
     "2nd Year Student",
@@ -60,7 +67,8 @@ export default function Hero() {
       const { data } = await supabase.auth.getUser()
       setUser(data.user)
     }
-
+    
+   
     getUser()
 
     const { data: listener } = supabase.auth.onAuthStateChange(
@@ -134,7 +142,60 @@ export default function Hero() {
 
     setSignInLoading(false)
   }
-
+  useEffect(() => {
+    const zone = zoneRef.current
+    const btn = buttonRef.current
+  
+    if (!zone || !btn) return
+  
+    const strength = 0.25
+  
+    const handleMouseMove = (e: MouseEvent) => {
+      const rect = zone.getBoundingClientRect()
+  
+      const x = gsap.utils.mapRange(
+        rect.left,
+        rect.right,
+        -rect.width / 2,
+        rect.width / 2,
+        e.clientX
+      )
+  
+      const y = gsap.utils.mapRange(
+        rect.top,
+        rect.bottom,
+        -rect.height / 2,
+        rect.height / 2,
+        e.clientY
+      )
+  
+      gsap.to(btn, {
+        x: x * strength,
+        y: y * strength,
+        duration: 0.4,
+        ease: "power2.out",
+        overwrite: true,
+      })
+    }
+  
+    const handleLeave = () => {
+      gsap.to(btn, {
+        x: 0,
+        y: 0,
+        duration: 0.7,
+        ease: "elastic.out(1, 0.4)",
+        overwrite: true,
+      })
+    }
+  
+    zone.addEventListener("mousemove", handleMouseMove)
+    zone.addEventListener("mouseleave", handleLeave)
+  
+    return () => {
+      zone.removeEventListener("mousemove", handleMouseMove)
+      zone.removeEventListener("mouseleave", handleLeave)
+    }
+  }, [])
   return (
     <section className="relative min-h-screen overflow-hidden bg-[#f8fafc] px-5 py-28 sm:px-6 lg:py-32">
       {/* Background */}
@@ -148,6 +209,171 @@ export default function Hero() {
 >
   <source src="/picu2.mp4" type="video/mp4" />
 </video>
+{/* Floating Mini Feature Cards */}
+
+{/* LEFT TOP */}
+<motion.div
+  animate={{
+    y: [0, -14, 0],
+  }}
+  transition={{
+    duration: 4,
+    repeat: Infinity,
+    ease: "easeInOut",
+  }}
+  className="
+  absolute
+  left-[6%]
+  top-[24%]
+  z-10
+  hidden lg:block
+  "
+>
+  <div
+    className="
+    w-[180px]
+    rounded-3xl
+    bg-white/60
+    backdrop-blur-2xl
+    border border-white/50
+    shadow-[0_10px_40px_rgba(0,0,0,0.08)]
+    p-5
+    "
+  >
+    <div className="text-3xl">🚀</div>
+
+    <h3 className="mt-3 text-lg font-semibold text-black">
+      Launch Ideas
+    </h3>
+
+    <p className="mt-1 text-sm text-gray-600 leading-relaxed">
+      Turn concepts into real products.
+    </p>
+  </div>
+</motion.div>
+
+{/* RIGHT TOP */}
+<motion.div
+  animate={{
+    y: [0, 12, 0],
+  }}
+  transition={{
+    duration: 5,
+    repeat: Infinity,
+    ease: "easeInOut",
+  }}
+  className="
+  absolute
+  right-[8%]
+  top-[20%]
+  z-10
+  hidden lg:block
+  "
+>
+  <div
+    className="
+    w-[190px]
+    rounded-3xl
+    bg-white/60
+    backdrop-blur-2xl
+    border border-white/50
+    shadow-[0_10px_40px_rgba(0,0,0,0.08)]
+    p-5
+    "
+  >
+    <div className="text-3xl">🤝</div>
+
+    <h3 className="mt-3 text-lg font-semibold text-black">
+      Find Teammates
+    </h3>
+
+    <p className="mt-1 text-sm text-gray-600 leading-relaxed">
+      Connect with builders worldwide.
+    </p>
+  </div>
+</motion.div>
+
+{/* LEFT BOTTOM */}
+<motion.div
+  animate={{
+    y: [0, -10, 0],
+  }}
+  transition={{
+    duration: 6,
+    repeat: Infinity,
+    ease: "easeInOut",
+  }}
+  className="
+  absolute
+  left-[10%]
+  bottom-[18%]
+  z-10
+  hidden lg:block
+  "
+>
+  <div
+    className="
+    w-[180px]
+    rounded-3xl
+    bg-white/60
+    backdrop-blur-2xl
+    border border-white/50
+    shadow-[0_10px_40px_rgba(0,0,0,0.08)]
+    p-5
+    "
+  >
+    <div className="text-3xl">🏆</div>
+
+    <h3 className="mt-3 text-lg font-semibold text-black">
+      Hackathons
+    </h3>
+
+    <p className="mt-1 text-sm text-gray-600 leading-relaxed">
+      Build winning teams fast.
+    </p>
+  </div>
+</motion.div>
+
+{/* RIGHT BOTTOM */}
+<motion.div
+  animate={{
+    y: [0, 14, 0],
+  }}
+  transition={{
+    duration: 4.5,
+    repeat: Infinity,
+    ease: "easeInOut",
+  }}
+  className="
+  absolute
+  right-[10%]
+  bottom-[14%]
+  z-10
+  hidden lg:block
+  "
+>
+  <div
+    className="
+    w-[190px]
+    rounded-3xl
+    bg-white/60
+    backdrop-blur-2xl
+    border border-white/50
+    shadow-[0_10px_40px_rgba(0,0,0,0.08)]
+    p-5
+    "
+  >
+    <div className="text-3xl">💡</div>
+
+    <h3 className="mt-3 text-lg font-semibold text-black">
+      Smart Matching
+    </h3>
+
+    <p className="mt-1 text-sm text-gray-600 leading-relaxed">
+      AI-powered teammate discovery.
+    </p>
+  </div>
+</motion.div>
 
 {/* Dark Overlay */}
 <div className="absolute inset-0 bg-white/70 backdrop-blur-[2px]" />
@@ -233,7 +459,62 @@ export default function Hero() {
           <span className="text-teal-500">Build</span>
           <span className="text-black">Buddy</span>
         </h1>
+        <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-50">
+  <div
+    className="
+    flex items-center gap-2
+    px-2 py-2
+    rounded-full
+    bg-white/50
+    backdrop-blur-2xl
+    border border-white/40
+    shadow-[0_10px_40px_rgba(0,0,0,0.06)]
+    "
+  >
 
+    {["Home", "About", "Demo", "Start"].map((item) => (
+      <button
+        key={item}
+        className="
+        group
+        relative
+        overflow-hidden
+        px-5 py-2.5
+        rounded-full
+        text-sm font-medium
+        text-gray-600
+
+        transition-all duration-300
+        hover:text-teal-600
+        hover:bg-teal-50
+        hover:scale-110
+        active:scale-95
+        "
+      >
+
+        {/* LIGHT SWEEP */}
+        <span
+          className="
+          absolute inset-0
+          -translate-x-full
+          group-hover:translate-x-full
+          transition-transform duration-700
+          bg-gradient-to-r
+          from-transparent
+          via-white/70
+          to-transparent
+          skew-x-12
+          "
+        />
+
+        {/* TEXT */}
+        <span className="relative z-10">
+          {item}
+        </span>
+      </button>
+    ))}
+  </div>
+</nav>
         {user ? (
           <div className="w-10 h-10 rounded-full bg-teal-500 flex items-center justify-center text-white font-bold">
             {user.email?.charAt(0).toUpperCase()}
@@ -257,7 +538,7 @@ export default function Hero() {
 
           <div className="w-2 h-2 rounded-full bg-teal-500 animate-pulse" />
 
-          <span className="text-xs tracking-[0.22em] text-teal-600 font-medium sm:text-sm sm:tracking-[0.25em]">
+          <span className="text-xs tracking-[0.22em] text-black-800 font-medium sm:text-sm sm:tracking-[0.25em]">
             FIND
           </span>
 
@@ -269,35 +550,56 @@ export default function Hero() {
 
           <div className="w-1 h-1 rounded-full bg-teal-400" />
 
-          <span className="text-xs tracking-[0.22em] text-teal-600 font-medium sm:text-sm sm:tracking-[0.25em]">
+          <span className="text-xs tracking-[0.22em] text-black-800 font-medium sm:text-sm sm:tracking-[0.25em]">
             BUILD
           </span>
         </div>
+        <div className="tracking-wide">
 
-        {/* Heading */}
-        <motion.h1
-          initial={{ opacity: 0, y: 35 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-5xl font-bold leading-[0.95] tracking-[-0.04em] sm:text-6xl md:text-8xl"
-        >
-          <span className="text-teal-500">
-            Find your
-          </span>
+{/* Heading */}
+<motion.h1
+  initial={{ opacity: 0, y: 35 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.8 }}
+  className="text-4xl font-bold leading-[1] tracking-[-0.04em] sm:text-5xl md:text-7xl"
+>
 
-          <br />
+  {/* First Line */}
+  <div className="flex items-center justify-center gap-4 flex-wrap">
 
-          <span className="text-black">
-            perfect
-          </span>
+    <span className="text-black">
+      Find your
+    </span>
 
-          <br />
+    <div className="w-12 h-12 rounded-2xl bg-teal-100 flex items-center justify-center relative top-1">
+      <Handshake className="w-6 h-6 text-teal-600" />
+    </div>
 
-          <span className="text-black">
-            build buddy.
-          </span>
-        </motion.h1>
+    <motion.span
+      animate={{
+        y: [0, -8, 0],
+      }}
+      transition={{
+        duration: 3,
+        repeat: Infinity,
+        ease: "easeInOut",
+      }}
+      className="inline-block text-teal-600"
+    >
+      perfect
+    </motion.span>
 
+  </div>
+
+  {/* Second Line */}
+  <div className="mt-3 text-black">
+    build buddy.
+  </div>
+
+</motion.h1>
+
+
+</div>
         {/* Subtitle */}
         <p className="mx-auto mt-7 max-w-2xl text-base leading-relaxed text-gray-500 sm:text-lg md:text-xl font-light">
           Connect with builders, share ideas,
@@ -308,119 +610,35 @@ export default function Hero() {
           together.
         </p>
         
+        <div
+  ref={zoneRef}
+  className="mt-14 flex items-center justify-center"
+>
+<motion.button
+  whileHover={{
+    scale: 1.05,
+    y: -3,
+  }}
+  whileTap={{ scale: 0.98 }}
+  onClick={() => {
+    setQuizOpen(true)
+    setStep(1)
+  }}
+  className="px-10 py-5 rounded-full bg-teal-500 hover:bg-teal-600 transition-all duration-300 text-white text-lg font-medium shadow-2xl shadow-teal-500/30 flex items-center gap-3 mx-auto"
+>
+  Get Started
 
-        {/* CTA */}
-        <motion.div
-          animate={{ y: [-8, 8, -8] }}
-          transition={{
-            duration: 4,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          className="mt-10 sm:mt-12"
-        >
-          <motion.button
-            whileHover={{
-              scale: 1.05,
-              y: -3,
-            }}
-            whileTap={{ scale: 0.98 }}
-            onClick={() => {
-              setQuizOpen(true)
-              setStep(1)
-            }}
-            className="rounded-full bg-teal-500 px-9 py-4 text-base font-medium text-white shadow-2xl shadow-teal-500/30 transition-all duration-300 hover:bg-teal-600 sm:px-10 sm:py-5 sm:text-lg"
-          >
-            Get Started
-          </motion.button>
-        </motion.div>
-      </div>
-{/* Floating Feature Cards */}
-<div className="grid w-full max-w-5xl grid-cols-1 gap-4 sm:grid-cols-3 sm:items-stretch lg:gap-6">
-
-  {/* Left Card */}
-  <motion.div
-    animate={{
-      y: [0, -8, 0],
-    }}
-    transition={{
-      duration: 5,
-      repeat: Infinity,
-      ease: "easeInOut",
-    }}
-    whileHover={{
-      y: -10,
-      scale: 1.02,
-    }}
-    className="relative h-full rounded-2xl border border-white/70 bg-white/75 p-5 text-left shadow-xl shadow-teal-900/5 backdrop-blur-xl sm:mt-7"
-  >
-    <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-teal-500/10 text-2xl">🚀</div>
-
-    <h3 className="text-black text-lg font-semibold">
-      Build Projects
-    </h3>
-
-    <p className="mt-2 text-gray-600 text-sm leading-relaxed">
-      Find builders and turn ideas into real products.
-    </p>
-  </motion.div>
-
-  {/* Center Card */}
-  <motion.div
-    animate={{
-      y: [0, -12, 0],
-    }}
-    transition={{
-      duration: 4,
-      repeat: Infinity,
-      ease: "easeInOut",
-    }}
-    whileHover={{
-      y: -14,
-      scale: 1.03,
-    }}
-    className="relative z-20 h-full rounded-2xl border border-teal-200 bg-white/95 p-6 text-left shadow-2xl shadow-teal-900/10 backdrop-blur-2xl sm:-mt-1"
-  >
-    <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-teal-500 text-3xl shadow-lg shadow-teal-500/25">🤝</div>
-
-    <h3 className="text-black text-xl font-bold leading-tight">
-      Find Perfect
-      <br />
-      Teammates
-    </h3>
-
-    <p className="mt-3 text-gray-600 text-sm leading-relaxed">
-      Connect with people matching your skills and goals.
-    </p>
-  </motion.div>
-
-  {/* Right Card */}
-  <motion.div
-    animate={{
-      y: [0, -8, 0],
-    }}
-    transition={{
-      duration: 6,
-      repeat: Infinity,
-      ease: "easeInOut",
-    }}
-    whileHover={{
-      y: -10,
-      scale: 1.02,
-    }}
-    className="relative h-full rounded-2xl border border-white/70 bg-white/75 p-5 text-left shadow-xl shadow-teal-900/5 backdrop-blur-xl sm:mt-7"
-  >
-    <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-teal-500/10 text-2xl">🏆</div>
-
-    <h3 className="text-black text-lg font-semibold">
-      Hackathon Teams
-    </h3>
-
-    <p className="mt-2 text-gray-600 text-sm leading-relaxed">
-      Meet teammates for hackathons and startup ideas.
-    </p>
-  </motion.div>
+  <ArrowRight className="w-5 h-5" />
+</motion.button>
 </div>
+
+        {/* Floating Feature Cards */}
+
+      </div>
+ 
+    
+
+   
       </div>
       {/* SIGN IN */}
       <AnimatePresence>

@@ -138,9 +138,130 @@ export default function Second() {
             through projects.
           </p>
         </motion.div>
-
+       
         
+{/* Moving Cards */}
+<div className="relative overflow-hidden mt-16">
 
+  {/* Left Fade */}
+  <div className="absolute left-0 top-0 h-full w-32 bg-gradient-to-r from-[#f8fafc] to-transparent z-20" />
+
+  {/* Right Fade */}
+  <div className="absolute right-0 top-0 h-full w-32 bg-gradient-to-l from-[#f8fafc] to-transparent z-20" />
+
+  <motion.div
+    animate={{
+      x: [0, -300, 0],
+    }}
+    transition={{
+      duration: 14,
+      repeat: Infinity,
+      ease: "easeInOut",
+    }}
+    className="flex items-stretch gap-7 w-max px-10"
+  >
+
+    {[
+      {
+        emoji: "🚀",
+        title: "Join a Project",
+        desc: "Explore projects looking for collaborators.",
+        button: "Get Started →",
+      },
+      {
+        emoji: "💡",
+        title: "Create a Project",
+        desc: "Post your own project and find teammates.",
+        button: "Create Project →",
+      },
+      {
+        emoji: "🏆",
+        title: "Hackathon Team",
+        desc: "Find teammates for hackathons and events.",
+        button: "Find Team →",
+      },
+      {
+        emoji: "🤝",
+        title: "Find a BuildBuddy",
+        desc: "Connect with like-minded builders.",
+        button: "Find Buddy →",
+      },
+    ].map((card, index) => (
+      <motion.div
+        key={index}
+        whileHover={{
+          y: -10,
+          scale: 1.03,
+        }}
+        onClick={() => {
+
+          if (card.title === "Join a Project") {
+            setJoinOpen(true)
+          }
+
+          if (card.title === "Create a Project") {
+            setCreateProjectOpen(true)
+          }
+
+          if (card.title === "Hackathon Team") {
+            setHackathonOpen(true)
+          }
+
+          if (card.title === "Find a BuildBuddy") {
+            setFindBuddyOpen(true)
+          }
+        }}
+        className="
+        relative
+        w-[560px]
+        h-[300px]
+        rounded-[36px]
+        overflow-hidden
+        cursor-pointer
+        "
+      >
+        <div className="w-1/2 p-8 flex flex-col justify-between">
+          <div>
+            <div className="text-5xl">{card.emoji}</div>
+
+            <h3 className="mt-6 text-3xl font-bold text-black leading-tight">
+              {card.title}
+            </h3>
+
+            <p className="mt-4 text-gray-600 text-lg leading-relaxed">
+              {card.desc}
+            </p>
+          </div>
+
+          <button
+            type="button"
+            className="text-teal-600 font-semibold text-lg hover:translate-x-1 transition text-left"
+          >
+            {card.button}
+          </button>
+        </div>
+
+        <div className="relative w-1/2 h-full bg-[#ecfeff]">
+          <img
+            src={
+              index === 0
+                ? "/11.png"
+                : index === 1
+                  ? "/22.png"
+                  : index === 2
+                    ? "/33.png"
+                    : "/buddy.png"
+            }
+            alt={card.title}
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+
+          <div className="absolute inset-0 bg-gradient-to-l from-transparent to-white/10" />
+        </div>
+      </motion.div>
+    ))}
+  </motion.div>
+</div>
         {/* Project Actions */}
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mt-16">
           {actionCards.map((card, index) => (
@@ -193,9 +314,32 @@ export default function Second() {
   viewport={{ once: true }}
   className="mt-20 text-center max-w-3xl mx-auto"
 >
-  <p className="text-2xl md:text-3xl font-medium text-black leading-relaxed">
-    “We help you find the perfect teammate to build, learn, and grow together.”
-  </p>
+<motion.p
+  initial={{ opacity: 0, y: 40 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.8 }}
+  viewport={{ once: true }}
+  className="mt-10 text-6xl md:text-3xl font-medium text-black text-center leading-relaxed"
+>
+  We help you find the{" "}
+
+  <motion.span
+    animate={{
+      opacity: [0.4, 1, 0.4],
+      y: [0, -3, 0],
+    }}
+    transition={{
+      duration: 2,
+      repeat: Infinity,
+      ease: "easeInOut",
+    }}
+    className="inline-block text-teal-600 font-semibold"
+  >
+    perfect teammate
+  </motion.span>
+
+  {" "}to build, learn, and grow together.
+</motion.p>
 
   <p className="mt-6 text-lg md:text-xl text-black/70 leading-relaxed">
     “Because great products are never built alone — we help you find your people.”
