@@ -2,10 +2,10 @@
 
 import { motion } from "framer-motion"
 import { useState } from "react"
+
 import FindBuddy from "./FindBuddy"
 import Hackathon from "./Hackathon"
 import Join from "./Join"
-import FeatureCards from "./FeatureCards"
 import MakeProject from "./MakeProject"
 
 export default function Second() {
@@ -19,6 +19,7 @@ export default function Second() {
       emoji: "🚀",
       title: "Join a Project",
       desc: "Explore active projects looking for collaborators.",
+      img: "/photo1.png",
       button: "Browse Projects",
       onClick: () => setJoinOpen(true),
     },
@@ -26,6 +27,7 @@ export default function Second() {
       emoji: "💡",
       title: "Create a Project",
       desc: "Post your own idea and find the right teammates.",
+      img: "/photo2.png",
       button: "Create Project",
       onClick: () => setCreateProjectOpen(true),
     },
@@ -33,6 +35,7 @@ export default function Second() {
       emoji: "🏆",
       title: "Hackathon Team",
       desc: "Find teammates for hackathons, events, and build sprints.",
+      img: "/hello.png",
       button: "Find Team",
       onClick: () => setHackathonOpen(true),
     },
@@ -40,6 +43,7 @@ export default function Second() {
       emoji: "🤝",
       title: "Find a BuildBuddy",
       desc: "Connect with builders who match your interests and skills.",
+      img: "/hello2.png",
       button: "Find Buddy",
       onClick: () => setFindBuddyOpen(true),
     },
@@ -49,26 +53,32 @@ export default function Second() {
     {
       title: "Find Builders",
       desc: "Connect with students, developers, and creators who actually want to build.",
+      img: "/photo1.png",
     },
     {
       title: "Build Real Projects",
       desc: "Turn raw ideas into real products with people who match your energy.",
+      img: "/photo2.png",
     },
     {
       title: "Gain Experience",
       desc: "Work on meaningful projects, improve your skills, and grow your portfolio.",
+      img: "/hello2.png",
     },
     {
       title: "Find Your Team",
       desc: "Hackathons, startups, side projects — find the right people faster.",
+      img: "/hello.png",
     },
     {
       title: "Explore Niches",
       desc: "AI, Web3, Design, SaaS, Hackathons — discover projects in your niche.",
+      img: "/33.png",
     },
     {
       title: "Start Together",
       desc: "From idea to execution, collaborate with people who share your vision.",
+      img: "/11.png",
     },
   ]
 
@@ -112,22 +122,11 @@ export default function Second() {
           className="text-center max-w-4xl mx-auto"
         >
           <h2 className="text-5xl md:text-7xl font-bold leading-[1.05] tracking-[-0.04em]">
-
-            <span className="text-black">
-              Built for people
-            </span>
-
+            <span className="text-black">Built for people</span>
             <br />
-
-            <span className="text-teal-500">
-              who want to create,
-            </span>
-
+            <span className="text-teal-500">who want to create,</span>
             <br />
-
-            <span className="text-black">
-              not scroll.
-            </span>
+            <span className="text-black">not scroll.</span>
           </h2>
 
           <p className="mt-8 text-lg md:text-xl text-gray-500 leading-relaxed font-light max-w-3xl mx-auto">
@@ -139,94 +138,72 @@ export default function Second() {
             through projects.
           </p>
         </motion.div>
-       
-        <FeatureCards/>
 
-        {/* Project Actions */}
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mt-16">
-          {actionCards.map((card, index) => (
-            <motion.button
-              key={card.title}
-              type="button"
-              initial={{ opacity: 0, y: 35 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{
-                delay: index * 0.08,
-                duration: 0.6,
-              }}
-              whileHover={{
-                y: -8,
-              }}
-              onClick={card.onClick}
-              className="group relative rounded-3xl p-[1px] overflow-hidden text-left"
-            >
-              <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-teal-400 via-teal-500 to-teal-400 opacity-0 group-hover:opacity-100 transition duration-500" />
-
-              <div className="relative h-full rounded-3xl bg-white/90 backdrop-blur-xl p-7 border border-white/60 shadow-lg hover:shadow-2xl transition-all duration-500">
-                <div className="text-4xl mb-6">
-                  {card.emoji}
-                </div>
-
-                <h3 className="text-2xl font-semibold text-black transition duration-300 group-hover:text-teal-600">
-                  {card.title}
-                </h3>
-
-                <p className="mt-4 text-gray-500 leading-relaxed font-light">
-                  {card.desc}
-                </p>
-
-                <span className="mt-7 inline-flex text-teal-500 font-medium">
-                  {card.button}
-                </span>
-              </div>
-            </motion.button>
-          ))}
-        </div>
-        <motion.div
-  initial={{ opacity: 0, y: 20 }}
-  whileInView={{ opacity: 1, y: 0 }}
-  animate={{ y: [0, -8, 0] }}
-  transition={{
-    duration: 3,
-    repeat: Infinity,
-    ease: "easeInOut",
-  }}
-  viewport={{ once: true }}
-  className="mt-20 text-center max-w-3xl mx-auto"
->
-<motion.p
-  initial={{ opacity: 0, y: 40 }}
-  whileInView={{ opacity: 1, y: 0 }}
-  transition={{ duration: 0.8 }}
-  viewport={{ once: true }}
-  className="mt-10 text-6xl md:text-3xl font-medium text-black text-center leading-relaxed"
->
-  We help you find the{" "}
-
-  <motion.span
-    animate={{
-      opacity: [0.4, 1, 0.4],
-      y: [0, -3, 0],
-    }}
-    transition={{
-      duration: 2,
-      repeat: Infinity,
-      ease: "easeInOut",
-    }}
-    className="inline-block text-teal-600 font-semibold"
+        {/* Action Cards */}
+        {actionCards.map((card, index) => (
+  <motion.button
+    key={card.title}
+    type="button"
+    initial={{ opacity: 0, y: 35 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    transition={{ delay: index * 0.08, duration: 0.6 }}
+    whileHover={{ y: -8, scale: 1.01 }}
+    onClick={card.onClick}
+    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mt-16"
   >
-    perfect teammate
-  </motion.span>
+    
+    {/* OUTER GRADIENT BORDER (HIDDEN UNTIL HOVER) */}
+    <motion.button
+  className="w-[280px] flex-shrink-0 group relative rounded-2xl p-[1px] overflow-hidden text-left"
+></motion.button>
+    <div className="relative h-full rounded-2xl bg-white/90 backdrop-blur-xl border border-white/60 shadow-md group-hover:shadow-2xl transition-all duration-500 overflow-hidden">
 
-  {" "}to build, learn, and grow together.
-</motion.p>
+      {/* IMAGE */}
+      <div className="h-28 w-full overflow-hidden">
+        <img
+          src={card.img}
+          alt={card.title}
+          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+        />
+      </div>
 
-  <p className="mt-6 text-lg md:text-xl text-black/70 leading-relaxed">
-    “Because great products are never built alone — we help you find your people.”
-  </p>
-</motion.div>
+      {/* CONTENT */}
+      <div className="p-5">
 
-        {/* Cards */}
+        <h3 className="text-xl font-semibold group-hover:text-teal-600 transition">
+          {card.title}
+        </h3>
+
+        <p className="mt-2 text-gray-500 text-sm font-light">
+          {card.desc}
+        </p>
+
+        <span className="mt-4 inline-block text-teal-500 font-medium text-sm">
+          {card.button}
+        </span>
+      </div>
+
+      </div>
+      
+  </motion.button>
+        ))}
+
+        {/* WHY TEXT */}
+        <div className="mt-20 text-center max-w-3xl mx-auto">
+          <p className="text-4xl md:text-3xl font-medium text-black leading-relaxed">
+            We help you find the{" "}
+            <span className="text-teal-600 font-semibold">
+              perfect teammate
+            </span>{" "}
+            to build, learn, and grow together.
+          </p>
+
+          <p className="mt-6 text-lg text-black/70">
+            “Because great products are never built alone — we help you find your people.”
+          </p>
+        </div>
+
+        {/* ⭐ UPDATED CARDS SECTION (TOP HALF IMAGE BOX ADDED) */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7 mt-24">
 
           {cards.map((card, index) => (
@@ -234,40 +211,35 @@ export default function Second() {
               key={index}
               initial={{ opacity: 0, y: 35 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{
-                delay: index * 0.08,
-                duration: 0.6,
-              }}
-              whileHover={{
-                y: -10,
-              }}
-              className="group relative rounded-3xl p-[1px] overflow-hidden"
+              transition={{ delay: index * 0.08, duration: 0.6 }}
+              whileHover={{ y: -10 }}
+              className="group relative rounded-3xl overflow-hidden"
             >
+              <div className="bg-white/80 backdrop-blur-xl rounded-3xl border border-white/50 shadow-lg overflow-hidden">
 
-              {/* Animated Border */}
-              <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-teal-400 via-teal-500 to-teal-400 opacity-0 group-hover:opacity-100 transition duration-500" />
+                {/* TOP IMAGE BOX (ROUNDED RECTANGLE) */}
+                <div className="p-4">
+                  <div className="h-44 w-full rounded-2xl overflow-hidden border border-teal-400/40 group-hover:border-teal-500 transition">
+                    <img
+                      src={card.img}
+                      alt={card.title}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    />
+                  </div>
+                </div>
 
-              {/* Card */}
-              <div className="relative h-full rounded-3xl bg-white/80 backdrop-blur-xl p-8 border border-white/50 shadow-lg hover:shadow-2xl transition-all duration-500">
+                {/* TEXT CONTENT */}
+                <div className="p-6">
 
-                {/* Glow */}
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500 bg-gradient-to-br from-teal-100/30 to-transparent rounded-3xl" />
-
-                {/* Content */}
-                <div className="relative z-10">
-
-                  {/* Number */}
-                  <div className="w-12 h-12 rounded-2xl bg-teal-500/10 flex items-center justify-center text-teal-500 font-semibold text-lg mb-6 group-hover:bg-teal-500 group-hover:text-white transition duration-500">
+                  <div className="w-10 h-10 rounded-xl bg-teal-500/10 flex items-center justify-center text-teal-500 font-semibold mb-4 group-hover:bg-teal-500 group-hover:text-white transition">
                     0{index + 1}
                   </div>
 
-                  {/* Title */}
-                  <h3 className="text-2xl font-semibold text-black mb-4 transition duration-300 group-hover:text-teal-600">
+                  <h3 className="text-xl font-semibold group-hover:text-teal-600 transition">
                     {card.title}
                   </h3>
 
-                  {/* Description */}
-                  <p className="text-gray-500 leading-relaxed text-lg font-light">
+                  <p className="mt-2 text-gray-500 text-sm">
                     {card.desc}
                   </p>
 
@@ -275,28 +247,17 @@ export default function Second() {
               </div>
             </motion.div>
           ))}
+
         </div>
+
       </div>
 
-      <Join
-        open={joinOpen}
-        onClose={() => setJoinOpen(false)}
-      />
+      {/* MODALS */}
+      <Join open={joinOpen} onClose={() => setJoinOpen(false)} />
+      <MakeProject open={createProjectOpen} onClose={() => setCreateProjectOpen(false)} />
+      <Hackathon open={hackathonOpen} onClose={() => setHackathonOpen(false)} />
+      <FindBuddy open={findBuddyOpen} onClose={() => setFindBuddyOpen(false)} />
 
-      <MakeProject
-        open={createProjectOpen}
-        onClose={() => setCreateProjectOpen(false)}
-      />
-
-      <Hackathon
-        open={hackathonOpen}
-        onClose={() => setHackathonOpen(false)}
-      />
-
-      <FindBuddy
-        open={findBuddyOpen}
-        onClose={() => setFindBuddyOpen(false)}
-      />
     </section>
   )
 }
