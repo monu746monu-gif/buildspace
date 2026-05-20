@@ -6,9 +6,10 @@ import Join from "./Join"
 import FindBuddy from "./FindBuddy"
 import MakeProject from "./MakeProject"
 import { ArrowRight } from "lucide-react"
-import { Code2, Users, Rocket, Trophy, Sparkles } from "lucide-react"
 import { supabase } from "../lib/supabase"
 import gsap from "gsap"
+import  HeroCTA  from "./HeroCTA";
+
 
 import { Handshake } from "lucide-react"
 import { useRef , useCallback} from "react"
@@ -61,6 +62,13 @@ export default function Hero() {
     "Designer",
     "Open to Work",
   ]
+  const cards = [
+    { title: "Build Projects", desc: "Turn ideas into reality" },
+    { title: "Hackathons", desc: "Compete & win together" },
+    { title: "Learn Together", desc: "Grow with peers" },
+    { title: "Find Teammates", desc: "Connect instantly" },
+    { title: "Ship Faster", desc: "Build real products" },
+  ];
 
   useEffect(() => {
     const getUser = async () => {
@@ -196,8 +204,30 @@ export default function Hero() {
       zone.removeEventListener("mouseleave", handleLeave)
     }
   }, [])
+  
+    const containerRef = useRef(null);
+  
+    useEffect(() => {
+      const elements = gsap.utils.toArray(".hero-card");
+  
+      elements.forEach((el: any, i) => {
+        // floating animation (like eduard bodak site)
+        gsap.fromTo(
+          el,
+          { y: 0 },
+          {
+            y: i % 2 === 0 ? -12 : 12,
+            duration: 2 + Math.random(),
+            repeat: -1,
+            yoyo: true,
+            ease: "sine.inOut",
+          }
+        );
+      });
+    }, []);
+  
   return (
-    <section className="relative min-h-screen overflow-hidden bg-[#f8fafc] px-5 py-28 sm:px-6 lg:py-32">
+    <section className="relative flex h-screen min-h-0 flex-col overflow-hidden bg-[#f8fafc] px-5 sm:px-6">
       {/* Background */}
  {/* Video Background */}
 <video
@@ -205,176 +235,10 @@ export default function Hero() {
   muted
   loop
   playsInline
-  className="absolute inset-0 w-full h-full object-cover"
+  className="absolute inset-0 h-full w-full object-cover"
 >
   <source src="/picu2.mp4" type="video/mp4" />
 </video>
-{/* Floating Mini Feature Cards */}
-
-{/* LEFT TOP */}
-<motion.div
-  animate={{
-    y: [0, -14, 0],
-  }}
-  transition={{
-    duration: 4,
-    repeat: Infinity,
-    ease: "easeInOut",
-  }}
-  className="
-  absolute
-  left-[6%]
-  top-[24%]
-  z-10
-  hidden lg:block
-  "
->
-  <div
-    className="
-    w-[180px]
-    rounded-3xl
-    bg-white/60
-    backdrop-blur-2xl
-    border border-white/50
-    shadow-[0_10px_40px_rgba(0,0,0,0.08)]
-    p-5
-    "
-  >
-    <div className="text-3xl">🚀</div>
-
-    <h3 className="mt-3 text-lg font-semibold text-black">
-      Launch Ideas
-    </h3>
-
-    <p className="mt-1 text-sm text-gray-600 leading-relaxed">
-      Turn concepts into real products.
-    </p>
-  </div>
-</motion.div>
-
-{/* RIGHT TOP */}
-<motion.div
-  animate={{
-    y: [0, 12, 0],
-  }}
-  transition={{
-    duration: 5,
-    repeat: Infinity,
-    ease: "easeInOut",
-  }}
-  className="
-  absolute
-  right-[8%]
-  top-[20%]
-  z-10
-  hidden lg:block
-  "
->
-  <div
-    className="
-    w-[190px]
-    rounded-3xl
-    bg-white/60
-    backdrop-blur-2xl
-    border border-white/50
-    shadow-[0_10px_40px_rgba(0,0,0,0.08)]
-    p-5
-    "
-  >
-    <div className="text-3xl">🤝</div>
-
-    <h3 className="mt-3 text-lg font-semibold text-black">
-      Find Teammates
-    </h3>
-
-    <p className="mt-1 text-sm text-gray-600 leading-relaxed">
-      Connect with builders worldwide.
-    </p>
-  </div>
-</motion.div>
-
-{/* LEFT BOTTOM */}
-<motion.div
-  animate={{
-    y: [0, -10, 0],
-  }}
-  transition={{
-    duration: 6,
-    repeat: Infinity,
-    ease: "easeInOut",
-  }}
-  className="
-  absolute
-  left-[10%]
-  bottom-[18%]
-  z-10
-  hidden lg:block
-  "
->
-  <div
-    className="
-    w-[180px]
-    rounded-3xl
-    bg-white/60
-    backdrop-blur-2xl
-    border border-white/50
-    shadow-[0_10px_40px_rgba(0,0,0,0.08)]
-    p-5
-    "
-  >
-    <div className="text-3xl">🏆</div>
-
-    <h3 className="mt-3 text-lg font-semibold text-black">
-      Hackathons
-    </h3>
-
-    <p className="mt-1 text-sm text-gray-600 leading-relaxed">
-      Build winning teams fast.
-    </p>
-  </div>
-</motion.div>
-
-{/* RIGHT BOTTOM */}
-<motion.div
-  animate={{
-    y: [0, 14, 0],
-  }}
-  transition={{
-    duration: 4.5,
-    repeat: Infinity,
-    ease: "easeInOut",
-  }}
-  className="
-  absolute
-  right-[10%]
-  bottom-[14%]
-  z-10
-  hidden lg:block
-  "
->
-  <div
-    className="
-    w-[190px]
-    rounded-3xl
-    bg-white/60
-    backdrop-blur-2xl
-    border border-white/50
-    shadow-[0_10px_40px_rgba(0,0,0,0.08)]
-    p-5
-    "
-  >
-    <div className="text-3xl">💡</div>
-
-    <h3 className="mt-3 text-lg font-semibold text-black">
-      Smart Matching
-    </h3>
-
-    <p className="mt-1 text-sm text-gray-600 leading-relaxed">
-      AI-powered teammate discovery.
-    </p>
-  </div>
-</motion.div>
-
 {/* Dark Overlay */}
 <div className="absolute inset-0 bg-white/70 backdrop-blur-[2px]" />
 
@@ -530,11 +394,45 @@ export default function Hero() {
       </div>
 
       {/* Hero */}
-      <div className="relative z-20 mx-auto flex min-h-[calc(100vh-14rem)] w-full max-w-7xl flex-col items-center justify-center gap-12 text-center">
-      <div className="max-w-5xl">
+      <motion.div className="relative z-20 mx-auto flex w-full max-w-7xl flex-1 flex-col px-2">
+      {/* Side photo cards */}
+      <motion.img
+        src="/photo1.png"
+        alt=""
+        className="hero-card pointer-events-none absolute left-3 top-[30%] z-10 hidden h-36 w-44  rounded-3xl border border-white/60 object-cover shadow-2xl sm:left-6 sm:block sm:h-40 sm:w-32 md:left-10 md:h-44 md:w-36 lg:left-14"
+        animate={{
+          y: [0, -18, 0],
+          x: [0, 12, 0],
+          
+        }}
+        transition={{
+          y: { duration: 15, repeat: Infinity, ease: "easeInOut" },
+          x: { duration: 15, repeat: Infinity, ease: "easeInOut" },
+          rotateY: { duration: 15, repeat: Infinity, ease: "easeInOut" },
+        }}
+        style={{ transformStyle: "preserve-3d" }}
+      />
+      <motion.img
+        src="/photo2.png"
+        alt=""
+        className="hero-card pointer-events-none absolute right-3 top-[60%] z-20 hidden h-36 w-44 rounded-3xl border border-white/60 object-cover shadow-2xl sm:right-6 sm:block sm:h-40 sm:w-32 md:right-10 md:h-44 md:w-36 lg:right-14"
+        animate={{
+          y: [0, 30, 0],
+          x: [0, -20, 0],
+          
+        }}
+        transition={{
+          y: { duration: 15, repeat: Infinity, ease: "easeInOut" },
+          x: { duration: 15, repeat: Infinity, ease: "easeInOut" },
+          rotateY: { duration: 15, repeat: Infinity, ease: "easeInOut" },
+        }}
+        style={{ transformStyle: "preserve-3d" }}
+      />
+      <motion.div className="flex flex-1 flex-col items-center justify-center pt-32 text-center sm:pt-36 md:pt-40">
+      <div className="w-full max-w-5xl">
 
         {/* Top pill */}
-        <div className="mb-7 inline-flex max-w-full flex-wrap items-center justify-center gap-2 rounded-full border border-teal-200 bg-white/75 px-4 py-2 shadow-sm backdrop-blur-md sm:gap-3 sm:px-5">
+        <div className="mb-5 inline-flex max-w-full flex-wrap items-center justify-center gap-2 rounded-full border border-teal-200 bg-white/75 px-4 py-2 shadow-sm backdrop-blur-md sm:gap-3 sm:px-5">
 
           <div className="w-2 h-2 rounded-full bg-teal-500 animate-pulse" />
 
@@ -601,7 +499,7 @@ export default function Hero() {
 
 </div>
         {/* Subtitle */}
-        <p className="mx-auto mt-7 max-w-2xl text-base leading-relaxed text-gray-500 sm:text-lg md:text-xl font-light">
+        <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-gray-500 sm:text-lg md:text-xl font-light">
           Connect with builders, share ideas,
           and{" "}
           <span className="text-teal-500 font-medium">
@@ -610,9 +508,9 @@ export default function Hero() {
           together.
         </p>
         
-        <div
+        <motion.div
   ref={zoneRef}
-  className="mt-14 flex items-center justify-center"
+  className="mt-10 flex items-center justify-center sm:mt-12"
 >
 <motion.button
   whileHover={{
@@ -630,16 +528,13 @@ export default function Hero() {
 
   <ArrowRight className="w-5 h-5" />
 </motion.button>
-</div>
-
-        {/* Floating Feature Cards */}
+</motion.div>
 
       </div>
- 
-    
+      </motion.div>
 
-   
-      </div>
+      <HeroCTA />
+      </motion.div>
       {/* SIGN IN */}
       <AnimatePresence>
         {signInOpen && (

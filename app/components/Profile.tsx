@@ -7,6 +7,7 @@ type ProfileData = {
   email: string | null
   skills: string[] | null
   status: string | null
+  
   availability: string | null
 }
 

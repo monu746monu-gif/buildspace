@@ -27,6 +27,7 @@ export default function Home() {
     <>
     <Hero />
     <Second/>
+    <p>hello guys </p>
     <Sub/>
     <Footer/>
     </>
